@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  iotdashboardwithsignalr.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings_signalr=Endpoint=https://xxx.service.signalr.net;AccessKey=xxx
+    ports:
+      - "80"
+
+  iotdashboardwithsignalr.simulator:
+    environment:
+      - iothub=HostName=xxx.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=xxx

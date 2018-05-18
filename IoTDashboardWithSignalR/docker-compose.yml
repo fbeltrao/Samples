@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  iotdashboardwithsignalr.simulator:
+    image: ${DOCKER_REGISTRY}iotdashboardwithsignalrsimulator
+    build:
+      context: .
+      dockerfile: src/IoTDashboardWithSignalR.Simulator/Dockerfile
+
+  iotdashboardwithsignalr.web:
+    image: ${DOCKER_REGISTRY}iotdashboardwithsignalrweb
+    build:
+      context: .
+      dockerfile: src/IoTDashboardWithSignalR.Web/Dockerfile
+

@@ -1,0 +1,13 @@
+version: '3'
+services:
+  web:
+    image: fbeltrao/iotdashboardwithsignalrweb:1.2
+    environment:
+      ConnectionStrings__signalr: Endpoint=https://xxx.service.signalr.net;AccessKey=xxx
+    ports:
+      - "80:80"
+
+  simulator:
+    image: fbeltrao/iotdashboardwithsignalrsimulator:1.2
+    environment:
+      iothub: HostName=xxx.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=xxx

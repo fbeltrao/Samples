@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "name": "iotdashboardwithsignalrweb",
+  "private": true,
+  "dependencies": {
+    "@aspnet/signalr": "^1.0.0-rc1-final",
+    "@aspnet/signalr-protocol-msgpack": "^1.0.0-rc1-final",
+    "chart.js": "^2.7.2"
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
