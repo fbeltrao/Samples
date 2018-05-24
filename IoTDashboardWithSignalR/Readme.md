@@ -122,11 +122,11 @@ Create an IoT Hub in Azure, select at least Basic 1 Tier, so we can have multipl
 
 ### 3. Deploying the Function
 
-Git clone this repository and build the solution under ./IoTDashboardWithSignalR. Deploy the function **IoTDashboardWithSignalR.IoTHubPublisherFunction** to Azure from Visual Studio by right clicking the project and then selecting Publish. At the time of the writing we were using a beta version of Azure Functions. If prompted accept that we should be using a preview version.
+Git clone this repository and build the solution under ./IoTDashboardWithSignalR. Deploy the function **IoTDashboardWithSignalR.IoTHubPublisherFunction** to Azure from Visual Studio by right clicking the project and selecting Publish. For now we will be using a beta version of Azure Functions,  if prompted about activating the preview, accept it.
 
-Once deployed we need to configured the SignalR and IoT Hub information in our Azure Function. To do so go to the Azure Function Application settings and add the following keys:
+Once deployed we need to configure the SignalR and IoT Hub information in our Azure Function. Go to the Azure Function Application settings and add the following keys:
 
-**signalr_servicename**: set the name of your SignalR Service. This is the first part of the signalr host name. Example: if your service host name is ```mysignalr.service.signalr.net``` then enter ```mysignalr```
+**signalr_servicename**: set the name of your SignalR Service. This is the first part of the signalr host name. For instance if your service host name is ```mysignalr.service.signalr.net``` then enter ```mysignalr```. ![SignalR properties](media\signalr-properties.png)
 
 **signalr_accesskey**: enter here the SignalR service key, retrieved from the "Keys" blade in Azure Portal.
 
@@ -138,11 +138,13 @@ The copy the value of Event Hub-compatible name property concatenating with ```;
 The final connection string looks like:
 Endpoint=sb://```xyz```.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=```xyz```;EntityPath=```xyz```
 
-Save settings the Azure Function settings. Your function is ready to listen to IoT Hub and send measurements to SignalR. Let's finalize it!
+Save the Azure Function settings. Your function is ready to listen to IoT Hub and forward measurements to SignalR.
 
 ### 4. Deploying the Simulator and Web application
 
 Azure Web Apps supports deploying multi containers workloads with a docker-compose semantic. Only one of the containers can listen to incoming traffic (by exposing either port 80 or 8080). In this sample application we are going to deploy the backgroung worker that generates simulated IoT device data and the web application displaying the portal. For that create a new Web App. During the creation choose **Docker** as **OS**.
+
+![Web app with Docker](media\webapp-create-1.png)
 
 Once Docker has been selected you also need to configure the container. Choose **Docker Compose** and point to a local yml file containing the following:
 
@@ -174,9 +176,9 @@ Replace the SignalR and IoT Hub connection strings with the values from your Azu
   }
 }
 ```
-or in environment variable ```ConnectionStrings:signalr```. Environment variables with colon don't work properly with Docker. You can use double underscores to replace the colon character as ```ConnectionStrings__signalr```
+or as environment variable ```ConnectionStrings:signalr```. Environment variables with colon don't work properly with Docker. Use double underscores to replace the colon character as ```ConnectionStrings__signalr```
 
-2. You might try to set envirnoment variables the following way
+2. You might try to set environment variables the following way
 ```
 simulator:
     image: fbeltrao/iotdashboardwithsignalrsimulator:1.2
@@ -184,5 +186,5 @@ simulator:
       - iothub: HostName=<enter-iot-hub>.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=<enter-iot-hub-key>
 ```
 
-It won't work for now. Use without hyphen. For more limitation check this [page](https://blogs.msdn.microsoft.com/appserviceteam/2018/05/07/multi-container/)
+It won't work for now in Web Apps for multi container applications. Use without hyphen. For more limitations check this [page](https://blogs.msdn.microsoft.com/appserviceteam/2018/05/07/multi-container/)
 
