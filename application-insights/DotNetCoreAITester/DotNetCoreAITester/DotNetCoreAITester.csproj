@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/7a7761b9-7410-475e-a136-2ec8b8869af6/resourcegroups/default-weu/providers/microsoft.insights/components/fbrdefaultai</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/7a7761b9-7410-475e-a136-2ec8b8869af6/resourcegroups/default-weu/providers/microsoft.insights/components/fbrdefaultai</ApplicationInsightsAnnotationResourceId>
+    <UserSecretsId>11ef131f-98fd-4c78-bed1-15fa5843d69a</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+</Project>
