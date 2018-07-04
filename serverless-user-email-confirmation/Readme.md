@@ -1,4 +1,4 @@
-# User registration with email activitation with Azure Durable Functions
+# User registration with email activitation using Azure Durable Functions
 
 This repository demonstrates contains a sample implementation of a user registration process that requires email activation using Azure Durable Functions. If you need more information about Durable Function check the [documentation](https://docs.microsoft.com/en-us/azure/azure-functions/durable-functions-overview).
 
