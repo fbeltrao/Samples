@@ -28,6 +28,7 @@ This approach relies in deploying all versions of an API as a single Function Ap
 
 - Deploying a new version updates all existing versions. Fixing a bug in a v2 can introduce a bug in v1
 - When deployed in a consumption plan auto scaling will deploy all versions as a single block. The bigger the Azure Function binaries are the longer the cold start takes
+- A bug in one of the versions (i.e. using 100% CPU), can cause service degradation in other versions
 
 
 ### The code
@@ -74,6 +75,7 @@ namespace ApiFunction.v2
 An alternative is to contain each API version on its own repository, deployed into its own Function App. Joining all Function Apps into a single URL requires routing. The routing in Azure can be implemented in many ways, such as:
 - [Azure Function Proxies](https://docs.microsoft.com/en-us/azure/azure-functions/functions-proxies)
 - [Application Gateway](https://github.com/fbeltrao/azdeploy/tree/master/application-gateway)
+- [API Management](https://docs.microsoft.com/en-us/azure/api-management/import-function-app-as-api)
 
 
 ### Pros
@@ -84,4 +86,5 @@ An alternative is to contain each API version on its own repository, deployed in
 ### Cons
 
 - Fixing a bug that affects multiple versions requires making changes to multiple repositories 
+- Isolation, preventing code changes to version-1 to cause service degradation in version-2
 - Slightly more complicated deployment, requiring a router to control traffic based on the API version.
