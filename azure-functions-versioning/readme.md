@@ -1,4 +1,4 @@
-# API Versioning with Azure Functions
+# Versioning APIs in Azure Functions 
 
 This sample demonstrate a way to deploy an API with multiple versions using a single Azure Function App.
 
