@@ -13,7 +13,7 @@ namespace ApiFunction.v2
     public static class V2DevicesApi
     {
         [FunctionName(nameof(V2List))]
-        public static IEnumerable<DeviceModel> V2List(
+        public static IActionResult V2List(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "v2/devices")]
             HttpRequest req, 
             ILogger log)
@@ -29,7 +29,7 @@ namespace ApiFunction.v2
                     Department = x.Department,
                 });
 
-            return allDevices;
+            return new JsonResult(allDevices);
         }
 
         [FunctionName(nameof(V2Get))]

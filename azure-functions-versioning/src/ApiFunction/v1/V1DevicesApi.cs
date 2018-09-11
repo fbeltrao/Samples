@@ -13,7 +13,7 @@ namespace ApiFunction.v1
     public static class V1DevicesApi
     {
         [FunctionName(nameof(V1List))]
-        public static IEnumerable<DeviceModel> V1List(
+        public static IActionResult V1List(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "v1/devices")]
             HttpRequest req, 
             ILogger log)
@@ -28,7 +28,7 @@ namespace ApiFunction.v1
                     Location = x.Location,
                 });
 
-            return allDevices;
+            return new JsonResult(allDevices);
         }
 
         [FunctionName(nameof(V1Get))]

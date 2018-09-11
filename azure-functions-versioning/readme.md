@@ -68,11 +68,67 @@ namespace ApiFunction.v2
 
 ```
 
+### Versioning in query string and header
+
+The sample application also has a basic implementation of a routing function that calls the expected version based on version expressed in query string or accept header.
+The implementation looks like this:
+```C#
+/// <summary>
+/// Router function calling concrete implementation based on the version expressed in query string or accept header.
+/// Simple implementation, should be replaced once/if HttpTrigger can have header/query string based routing
+/// </summary>
+public static class RouterFunction
+{
+    [FunctionName(nameof(RouterList))]
+    public static IActionResult RouterList(
+        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "devices")]
+        HttpRequest req,
+        ILogger log,
+        IDictionary<string, string> headers,
+        IDictionary<string, string> query)
+    {
+        switch (ResolveVersion(headers, query))
+        {
+            case "1":
+                return v1.V1DevicesApi.V1List(req, log);
+
+            case "2":
+                return v2.V2DevicesApi.V2List(req, log);
+
+            default:
+                return new BadRequestObjectResult("Invalid version");
+        }            
+    }
+
+    private static string ResolveVersion(IDictionary<string, string> headers, IDictionary<string, string> query)
+    {
+        if (headers.TryGetValue("Accept", out var acceptHeader))
+        {
+            if (acceptHeader.Equals("application/vnd.fbeltrao.api-v1+json", StringComparison.InvariantCultureIgnoreCase))
+                return "1";
+
+            if (acceptHeader.Equals("application/vnd.fbeltrao.api-v2+json", StringComparison.InvariantCultureIgnoreCase))
+                return "2";
+        }
+
+        if (query.TryGetValue("version", out var queryStringVersion))
+        {
+            if (float.TryParse(queryStringVersion, out _))
+            {
+                return queryStringVersion;
+            }                
+        }
+
+        return null;
+    }
+}
+```
+
 
 
 ## Alternative: a Function App for each version
 
-An alternative is to contain each API version on its own repository, deployed into its own Function App. Joining all Function Apps into a single URL requires routing. The routing in Azure can be implemented in many ways, such as:
+An alternative is to contain each API version on its own repository branch, deployed into its own Function App. Joining all Function Apps into a single URL requires routing. The routing in Azure can be implemented in many ways, such as:
 - [Azure Function Proxies](https://docs.microsoft.com/en-us/azure/azure-functions/functions-proxies)
 - [Application Gateway](https://github.com/fbeltrao/azdeploy/tree/master/application-gateway)
 - [API Management](https://docs.microsoft.com/en-us/azure/api-management/import-function-app-as-api)
