@@ -7,10 +7,10 @@ This sample demonstrate a way to deploy an API with multiple versions using a si
 The desired endpoints for the API are:
 
 |Request|Http Method|URL|
-|-|-|
-|Get all devices|GET|`/api/{version}/devices`|
-|Add new device|POST|`/api/{version}/devices`|
-|Get single device|GET|`/api/{version}/devices/{deviceId}`|
+|-|-|-|
+|Get all devices|GET|/api/{version}/devices`|
+|Add new device|POST|/api/{version}/devices`|
+|Get single device|GET|/api/{version}/devices/{deviceId}`|
 |Update device|PUT|`/api/{version}/devices/{deviceId}`|
 
 
