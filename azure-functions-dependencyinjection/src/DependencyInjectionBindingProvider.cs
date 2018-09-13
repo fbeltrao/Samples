@@ -34,13 +34,13 @@ namespace DependencyInjectionFunction
             {
                 // Ignore parameters with attributes
                 if (parameter.GetCustomAttributes(false).Length == 0)
-                {
+                {                    
                     var registeredType = serviceProvider.GetService(parameter.ParameterType);
                     if (registeredType != null)
                     {
                         logger.LogInformation("Implementation for {type} found: {concreteType}", parameter.ParameterType.Name, registeredType.GetType().Name);
 
-                        return Task.FromResult<IBinding>(new DependencyInjectionBinding(parameter.Name, parameter.ParameterType, registeredType));
+                        return Task.FromResult<IBinding>(new DependencyInjectionBinding(parameter.Name, parameter.ParameterType, serviceProvider));
                     }
                     else
                     {

@@ -26,7 +26,7 @@ namespace DependencyInjectionFunction
             services.AddSingleton<IBindingProvider, DependencyInjectionBindingProvider>();
 
             // Setup custom application DI
-            services.AddSingleton<IDateTimeResolver, DateTimeResolver>();                        
+            services.AddScoped<IDateTimeResolver, DateTimeResolver>();
         }
     }
 }

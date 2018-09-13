@@ -4,13 +4,16 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace DependencyInjectionFunction
 {
-    internal class DependencyInjectionValueProvider : IValueProvider
+    /// <summary>
+    /// Returns a constant value
+    /// </summary>
+    internal class DependencyInjectionConstantValueProvider : IValueProvider
     {
         private readonly Type type;
         private readonly object value;
         private readonly string invokeString;
 
-        internal DependencyInjectionValueProvider(Type type, object value, string invokeString)
+        internal DependencyInjectionConstantValueProvider(Type type, object value, string invokeString)
         {
             this.type = type;
             this.value = value;

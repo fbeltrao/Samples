@@ -9,26 +9,34 @@ namespace DependencyInjectionFunction
     {
         private readonly string name;
         private readonly Type type;
-        private readonly object value;
+        private readonly IServiceProvider serviceProvider;
 
         /// <summary>
         /// Creates a new instance of <see cref="DependencyInjectionBinding"/>
         /// </summary>
         /// <param name="name">The property name</param>
         /// <param name="type">The property type</param>
-        /// <param name="value">The resolved property value</param>
-        internal DependencyInjectionBinding(string name, Type type, object value)
+        /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+        internal DependencyInjectionBinding(string name, Type type, IServiceProvider serviceProvider)
         {
             this.name = name;
             this.type = type;
-            this.value = value;
+            this.serviceProvider = serviceProvider;
         }
 
         public bool FromAttribute => false;
 
         public ParameterDescriptor ToParameterDescriptor() => new ParameterDescriptor { Name = this.name };
         
-        public Task<IValueProvider> BindAsync(BindingContext context) => BindAsync(this.value, context.ValueContext);
+        public Task<IValueProvider> BindAsync(BindingContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            return Task.FromResult<IValueProvider>(new DependencyInjectionDynamicValueProvider(this.type, this.serviceProvider, this.name));            
+        }
 
         public Task<IValueProvider> BindAsync(object value, ValueBindingContext context)
         {
@@ -39,7 +47,7 @@ namespace DependencyInjectionFunction
 
             if (this.type.IsAssignableFrom(value.GetType()))
             {
-                return Task.FromResult<IValueProvider>(new DependencyInjectionValueProvider(this.type, this.value, this.name));
+                return Task.FromResult<IValueProvider>(new DependencyInjectionConstantValueProvider(this.type, value, this.name));
             }
 
             return null;
