@@ -190,7 +190,7 @@ I takes a while until the ingress rule is applied, be patient.
 
 ### 8. Test the ingress route
 
-Browse to https://hello-world.&lt;your-domain&gt; and verify that the AKS Hello World app is displayed.
+Browse to https://hello-world.your-domain and verify that the AKS Hello World app is displayed.
 
 If you are using the staging environment you will have to accept the invalid certificate.
 
