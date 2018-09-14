@@ -1,6 +1,6 @@
 # Ingress to external URL
 
-The goal of this step is deploy a ingress to a resource that is outside the cluster. In my case I wanted to have my blog alias URL (https://blog.&lt;my-domain>) redirected to my blog website that is currently hosted in an external provider.
+The goal of this step is deploy a ingress to a resource that is outside the cluster. In my case I wanted to have my blog alias URL (https://blog.&lt;your-domain>) redirected to my blog website hosted in an external provider.
 
 There are better way to achieve that, for instance setting the rule directly on the DNS naming resolver. Just want to show how to make it possible.
 

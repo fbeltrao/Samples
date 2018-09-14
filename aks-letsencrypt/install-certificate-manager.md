@@ -106,7 +106,7 @@ Events:
   Normal  CertIssued      0s    cert-manager  Certificate issued successfully
 ```
 
-Once the certificate (it can take a few minutes) has been issued succesfully (`Certificate issued successfully`) you can move to next step and test the ingress route.
+Once the certificate has been issued successfully issued (it can take a few minutes) you can move to next step and test the ingress route.
 
 ### 6. Test the ingress route
 

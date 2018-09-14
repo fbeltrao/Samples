@@ -78,7 +78,7 @@ data:
   password: <the-password-in-base64>
 ```
 
-### 4. Deploy wildcard cluster issuer
+### 5. Deploy wildcard cluster issuer
 
 Modify the certificate deployment setting
 
@@ -114,7 +114,7 @@ spec:
           tenantID: <your tenant id>
 ```
 
-### 5. Deploy certificate
+### 6. Deploy certificate
 
 ```yaml
 apiVersion: certmanager.k8s.io/v1alpha1
@@ -158,8 +158,7 @@ Events:
   Normal  CertIssued      11s               cert-manager  Certificate issued successfully
 ```
 
-
-### 6. Add ingress rule for hello-world.&lt;your-domain>
+### 7. Add ingress rule for hello-world.&lt;your-domain>
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -189,7 +188,7 @@ spec:
 
 I takes a while until the ingress rule is applied, be patient.
 
-### 6. Test the ingress route
+### 8. Test the ingress route
 
 Browse to https://hello-world.&lt;your-domain> and verify that the AKS Hello World app is displayed.
 
@@ -255,7 +254,7 @@ E0914 13:19:26.610097       1 sync.go:197] [default/wildcard] Error getting cert
 E0914 13:19:26.709626       1 controller.go:180] certificates controller: Re-queuing item "default/wildcard" due to error processing: error getting certificate from acme server: acme: urn:ietf:params:acme:error:rateLimited: Error finalizing order :: too many certificates already issued for exact set of domains: *.<your-domain>,<your-domain>: see https://letsencrypt.org/docs/rate-limits/
 ```
 
-In my experience, after a while, the problem is solved. That's why I recommend using the staging issuer when trying things out.
+In my experience, after a while, the problem is solved. Hence, the recommendation to use staging when trying out.
 
 ***
 [**First**](./readme.md) - [**Previous**](./install-certificate-manager.md) - [**Next**](./ingress-to-external-url.md)
