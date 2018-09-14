@@ -50,9 +50,9 @@ Browsing to the Azure DNS will show the default ingress backend
 
 ![Add A record](media/azure-dns-add-a-record.png)
 
-After a while, browsing to www.&lt;your-domain&gt; displays the default ingress backend.
+After a while, browsing to www.&lt;your domain> displays the default ingress backend.
 
-## 5. Add ingress route for www.&lt;your-domain&gt;
+## 5. Add ingress route for www.&lt;your domain>
 
 Let's replace the www ingress with a new deployment by installing the AKS Hello World helm chart
 
@@ -61,7 +61,7 @@ helm repo add azure-samples https://azure-samples.github.io/helm-charts/
 helm install azure-samples/aks-helloworld
 ```
 
-Apply the ingress below, pointing the aks-hello services as the default backend for www.&lt;your-domain&gt;.
+Apply the ingress below, pointing the aks-hello services as the default backend for www.&lt;your domain>.
 
 ```bash
 apiVersion: extensions/v1beta1
