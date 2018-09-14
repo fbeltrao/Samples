@@ -41,7 +41,7 @@ spec:
     http01: {}
 ```
 
-### 3. Install certificate for hello-world.&lt;your domain>
+### 3. Install certificate for hello-world.&lt;your-domain&gt;
 
 ```yaml
 apiVersion: certmanager.k8s.io/v1alpha1
@@ -54,16 +54,16 @@ spec:
     name: letsencrypt
     kind: ClusterIssuer
   dnsNames:
-  - hello-world.<your domain>
+  - hello-world.<your-domain>
   acme:
     config:
     - http01:
         ingressClass: nginx
       domains:
-      - hello-world.<your domain>
+      - hello-world.<your-domain>
 ```
 
-### 4. Add ingress rule for hello-world.&lt;your domain>
+### 4. Add ingress rule for hello-world.&lt;your-domain&gt;
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -110,13 +110,13 @@ Once the certificate has been issued successfully issued (it can take a few minu
 
 ### 6. Test the ingress route
 
-Browse to https://hello-world.[your-domain] and verify that the AKS Hello World app is displayed.
+Browse to https://hello-world.&lt;your-domain&gt; and verify that the AKS Hello World app is displayed.
 
 If you are using the staging environment you will have to accept the invalid certificate.
 
 ![Let's Encrypt fake certificate](media/lets-encrypt-fake-certificate.png)
 
-Using http validation requires the creation of one certificate per domain (hello-world1.&lt;your domain>, hello-world2.&lt;your domain>, etc.). In the next step we will see how we can use cert-manager to handle wildcards certificates with Azure DNS.
+Using http validation requires the creation of one certificate per domain (hello-world1.&lt;your-domain&gt;, hello-world2.&lt;your-domain&gt;, etc.). In the next step we will see how we can use cert-manager to handle wildcards certificates with Azure DNS.
 
 ## Cleaning up
 
