@@ -50,7 +50,7 @@ Browsing to the Azure DNS will show the default ingress backend
 
 ![Add A record](media/azure-dns-add-a-record.png)
 
-After a while, browsing to http://www.&lt;your domain> displays the default ingress backend.
+After a while, browsing to http://www.[your domain] displays the default ingress backend.
 
 ## 5. Add ingress route for www.&lt;your domain>
 
