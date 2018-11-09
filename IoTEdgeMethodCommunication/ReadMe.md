@@ -26,11 +26,11 @@ Routes:
 
 ### Linux VM
 
-First call 1500 ms
-Most calls 30-59ms
+First call 1500 ms\
+Most calls 30-59ms\
 Outliners: 60-130ms (~10%)
 
 ### Raspberry PI
 
-First call 872 ms
+First call 872 ms\
 Most calls 180-375ms
