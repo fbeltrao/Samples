@@ -1,0 +1,44 @@
+{
+   // Use IntelliSense to find out which attributes exist for C# debugging
+   // Use hover for the description of the existing attributes
+   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+   "version": "0.2.0",
+   "configurations": [
+        {
+            "name": "Launch FileReader",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build_file_reader",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/FileReader/bin/Debug/netcoreapp2.1/FileReader.dll",
+            "args": ["/Users/fbeltrao/dev/github.com/fbeltrao/Samples/ContainerFileShare/src/FileWriter/"],
+            "cwd": "${workspaceFolder}/src/FileReader",
+            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "Launch FileWriter",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build_file_writer",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/FileWriter/bin/Debug/netcoreapp2.1/FileWriter.dll",
+            "args": [
+                "./"
+            ],
+            "cwd": "${workspaceFolder}/src/FileWriter",
+            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        }
+    ,]
+}

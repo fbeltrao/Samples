@@ -94,12 +94,14 @@ namespace SenderModule
         //     }
         // }
 
+        static Random random = new Random();
         static async Task<string> CallModuleUsingModuleClient(string deviceId, string libraryModule, ModuleClient client)
         {                
                 Console.WriteLine($"Will call module method: {deviceId}, {libraryModule}");
 
                 var payloadData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new { payload= "ABCDEF0987654321", fport=1 }));
-                var methodRequest = new MethodRequest("test", payloadData);
+                var methodName = random.Next(2) % 2 == 0 ? "test1" : "test2";
+                var methodRequest = new MethodRequest(methodName, payloadData);
                 
                 var stopwatch = Stopwatch.StartNew();
                 var response = await client.InvokeMethodAsync(deviceId, libraryModule, methodRequest);
