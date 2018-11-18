@@ -17,28 +17,36 @@ namespace FileReader
                 }
 
                 var fileName = Path.Combine(filePath, "shared.txt");
+                var isNetworkFile = true;
+                long position = 0L;
 
-                
-                using (var inStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                string line = null;
+                var inStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                var reader = new StreamReader(inStream);
+                if (isNetworkFile)
                 {
-                    // go to the end of the file
-                    inStream.Seek(0, SeekOrigin.End);
-
-                    
-                    using (var reader = new StreamReader(inStream))
+                    while (true)
                     {
-                        string line = null;
-                        while (true)
+                        inStream.Seek(position, SeekOrigin.Begin);
+                        while ((line = await reader.ReadLineAsync()) != null) 
                         {
-                            while ((line = await reader.ReadLineAsync()) != null)
+                            if (line.Length > 0 && line[0] == 0)
                             {
-                                Console.WriteLine("Read: " + line);
+                                await Task.Delay(1000);
+                                break;
                             }
-
-                            await Task.Delay(100);
+                            position = inStream.Position;
+                            Console.WriteLine("Read: " + line);
                         }
+
+                        reader.Dispose();
+                        inStream.Dispose();
+                        await Task.Delay(100);
+                        inStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                        reader = new StreamReader(inStream);
                     }
                 }
+                
             }
             catch (Exception ex)
             {

@@ -16,9 +16,7 @@ namespace FileWriter
                     filePath = args[0];
                 }
 
-                var fileName = Path.Combine(filePath, "shared.txt");
-
-                
+                var fileName = Path.Combine(filePath, "shared.txt");        
                 using (var outStream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
                 {
                     using (var writer = new StreamWriter(outStream))
@@ -32,7 +30,7 @@ namespace FileWriter
                             await writer.FlushAsync();
                             count++;
 
-                            await Task.Delay(10);
+                            await Task.Delay(TimeSpan.FromSeconds(3));
                         }
                     }
                 }

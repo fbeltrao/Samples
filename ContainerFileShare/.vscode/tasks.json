@@ -20,6 +20,26 @@
                 "${workspaceFolder}/src/FileWriter/FileWriter.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build_udp_reader",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/UdpReader/UdpReader.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build_udp_writer",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/UdpWriter/UdpWriter.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

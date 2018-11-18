@@ -11,7 +11,8 @@
             "preLaunchTask": "build_file_reader",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/FileReader/bin/Debug/netcoreapp2.1/FileReader.dll",
-            "args": ["/Users/fbeltrao/dev/github.com/fbeltrao/Samples/ContainerFileShare/src/FileWriter/"],
+            //"args": ["/Users/fbeltrao/dev/github.com/fbeltrao/Samples/ContainerFileShare/src/FileWriter/"],
+            "args":["/Volumes/Home Directory/edgeshare/"],
             "cwd": "${workspaceFolder}/src/FileReader",
             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
             "console": "internalConsole",
@@ -29,6 +30,37 @@
                 "./"
             ],
             "cwd": "${workspaceFolder}/src/FileWriter",
+            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "Launch UdpReader",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build_udp_reader",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/UdpReader/bin/Debug/netcoreapp2.1/UdpReader.dll",
+            //"args": ["/Users/fbeltrao/dev/github.com/fbeltrao/Samples/ContainerFileShare/src/FileWriter/"],
+            "args":["/Volumes/Home Directory/edgeshare/"],
+            "cwd": "${workspaceFolder}/src/UdpReader",
+            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "Launch UdpWriter",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build_udp_writer",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/UdpWriter/bin/Debug/netcoreapp2.1/UdpWriter.dll",
+            "args": [
+                "./"
+            ],
+            "cwd": "${workspaceFolder}/src/UdpWriter",
             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
             "console": "internalConsole",
             "stopAtEntry": false,
