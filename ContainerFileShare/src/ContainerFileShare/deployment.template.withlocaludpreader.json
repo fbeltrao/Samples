@@ -42,21 +42,9 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "fbeltrao/containerfileshare-udpwriter:1.0-arm32v7"       
-            }
-          },
-          "reader": {
-            "version": "1.0",
-            "type": "docker",
-            "status": "running",
-            "restartPolicy": "always",
-            "settings": {
-              "image": "fbeltrao/containerfileshare-udpreader:1.0-arm32v7",
+              "image": "fbeltrao/containerfileshare-udpwriter:1.0-arm32v7",
               "createOptions": {
-                "ExposedPorts": {
-                  "6000/udp": {}
-
-                }
+                "Cmd": ["192.168.1.124", "100"]
               }
             }
           },
