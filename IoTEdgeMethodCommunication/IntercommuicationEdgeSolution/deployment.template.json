@@ -30,6 +30,20 @@
           }
         },
         "modules": {
+          "api": {
+            "version": "1.0",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "fbeltrao/iotdirectmethod-webapimodule:1.0-arm32v7",
+              "createOptions": {
+                "ExposedPorts":{
+                  "80/tcp":{}
+                }
+              }
+            }
+          },
           "tempSensor": {
             "version": "1.0",
             "type": "docker",

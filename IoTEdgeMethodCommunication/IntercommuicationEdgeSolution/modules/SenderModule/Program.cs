@@ -11,6 +11,7 @@ namespace SenderModule
     using Microsoft.Azure.Devices.Client;
     using System.Diagnostics;
     using Newtonsoft.Json;
+    using System.Net.Http;
 
     class Program
     {
@@ -112,6 +113,50 @@ namespace SenderModule
                 return responseText;
         }
 
+        public static async Task<string> CallWebApiModule()
+        {
+            const string URL = "http://api:80/api/DecoderValueSensor?fport=1&payload=3131";
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
+                client.DefaultRequestHeaders.Add("Keep-Alive", "timeout=86400");
+                var stopwatch = Stopwatch.StartNew();
+                HttpResponseMessage response = await client.GetAsync(URL);
+                stopwatch.Stop();
+                Console.WriteLine($"Called {URL} in {stopwatch.ElapsedMilliseconds}ms");
+                
+                if (!response.IsSuccessStatusCode)
+                {
+                    var badReqResult = await response.Content.ReadAsStringAsync();
+
+                    if (!string.IsNullOrEmpty(badReqResult))
+                    {
+                        return $"{{\"error\": \"SensorDecoderModule '{URL}' returned bad request.\", \"exception message\": \"{badReqResult}\", \"rawpayload\": \"3131\"}}";
+                    }
+                    else
+                    {
+                        return  $"{{\"error\": \"SensorDecoderModule '{URL}' returned bad request.\", \"rawpayload\": \"3131\"}}";
+                    }
+                }
+                else
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in decoder handling: {ex.ToString()}");
+                
+                return JsonConvert.SerializeObject(new {
+                    error = $"Call to SensorDecoderModule '{URL}' failed.",
+                    exceptionMessage = ex.ToString(),
+                    rawpayload = "3131"
+                });
+            }
+        }
+
         /// <summary>
         /// This method is called whenever the module is sent a message from the EdgeHub. 
         /// It just pipe the messages without any change.
@@ -137,7 +182,8 @@ namespace SenderModule
                 var deviceId = System.Environment.GetEnvironmentVariable("IOTEDGE_DEVICEID");
                 // var resultFromServiceClient = await CallModuleUsingServiceClient(deviceId, libraryModule);
                 var resultFromModuleClient = await CallModuleUsingModuleClient(deviceId, libraryModule, moduleClient);
-                       
+                var resultFromWebApi = await CallWebApiModule();
+                Console.WriteLine($"API result: {resultFromWebApi}");
                 if (!string.IsNullOrEmpty(messageString))
                 {
                     var pipeMessage = new Microsoft.Azure.Devices.Client.Message(messageBytes);
