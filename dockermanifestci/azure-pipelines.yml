@@ -6,11 +6,20 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - dockermanifestci/
+
+
 variables:
   imageName: 'your-container-image-name:$(build.buildId)'
 
 steps:
-- bash: cat $HOME/.docker/config.json
+- bash: cat /etc/docker/daemon.json
 
 - script: docker build -f Dockerfile -t $(imageName) .
   displayName: 'docker build'
