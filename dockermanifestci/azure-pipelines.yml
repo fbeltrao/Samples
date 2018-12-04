@@ -17,9 +17,22 @@ trigger:
 
 variables:
   imageName: 'your-container-image-name:$(build.buildId)'
+  dockerDaemonContent: '{ "experimental": "enabled" }'
 
 steps:
 - bash: cat /etc/docker/daemon.json
+
+- bash: sudo cat /etc/docker/daemon.json
+  condition: always()
+
+- bash: docker manifest
+  condition: always()
+
+- bash: echo $dockerDaemonContent >> /etc/docker/daemon.json
+  condition: always()
+
+- bash: sudo cat /etc/docker/daemon.json
+  condition: always()
 
 - bash: docker manifest
   condition: always()
