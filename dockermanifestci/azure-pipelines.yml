@@ -21,7 +21,10 @@ variables:
 steps:
 - bash: cat /etc/docker/daemon.json
 
+- bash: docker manifest
+  condition: always()
+
 - script: docker build -f Dockerfile -t $(imageName) .
   displayName: 'docker build'
 
-- bash: docker manifest
+
