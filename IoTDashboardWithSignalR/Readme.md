@@ -144,7 +144,7 @@ Save the Azure Function settings. Your function is ready to listen to IoT Hub an
 
 Azure Web Apps supports deploying multi containers workloads with a docker-compose semantic. Only one of the containers can listen to incoming traffic (by exposing either port 80 or 8080). In this sample application we are going to deploy the backgroung worker that generates simulated IoT device data and the web application displaying the portal. For that create a new Web App. During the creation choose **Docker** as **OS**.
 
-![Web app with Docker](media\webapp-create-1.png)
+![Web app with Docker](media/webapp-create-1.png)
 
 Once Docker has been selected you also need to configure the container. Choose **Docker Compose** and point to a local yml file containing the following:
 
