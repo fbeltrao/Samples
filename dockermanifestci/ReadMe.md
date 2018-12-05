@@ -22,7 +22,8 @@ To enable them modify the `$HOME/.docker/config.json` adding the following prope
 
 ## Building in Azure Dev Ops
 
-Since building such manifests requires the usage of an experimental build, to use them requires a few workarounds when defining your pipeline. This (blog post)[https://www.axians-infoma.de/techblog/creating-a-multi-arch-docker-image-with-azure-devops/] explains how to do it. Basically we create a docker config file and use docker with it.
+Since building such manifests requires the usage of an experimental build, to use them requires a few workarounds when defining your pipeline. This [blog post](
+https://www.axians-infoma.de/techblog/creating-a-multi-arch-docker-image-with-azure-devops/) explains how to do it. Basically we create a docker config file and use docker with it.
 
 ```yaml
 steps:
