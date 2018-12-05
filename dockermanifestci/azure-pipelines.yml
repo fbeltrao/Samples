@@ -1,43 +1,110 @@
-# Docker image
-# Build a Docker image to deploy, run, or push to a container registry.
-# Add steps that use Docker Compose, tag images, push to a registry, run an image, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
-pool:
-  vmImage: 'Ubuntu 16.04'
-
 trigger:
   branches:
     include:
     - master
+    - feature/dockermanifestci
   paths:
     include:
     - dockermanifestci/
 
 
-variables:
-  imageName: 'your-container-image-name:$(build.buildId)'
-  dockerDaemonContent: '{ "experimental": "enabled" }'
-
-steps:
-- bash: cat /etc/docker/daemon.json
-
-- bash: sudo cat /etc/docker/daemon.json
-  condition: always()
-
-- bash: docker manifest
-  condition: always()
-
-- bash: echo $dockerDaemonContent >> /etc/docker/daemon.json
-  condition: always()
-
-- bash: sudo cat /etc/docker/daemon.json
-  condition: always()
-
-- bash: docker manifest
-  condition: always()
-
-- script: docker build -f Dockerfile -t $(imageName) .
-  displayName: 'docker build'
+variables:  
+  imageName: 'fbeltrao/dockermanifestci:1.0.$(build.buildId)'
+  dockerHubEndpoint: 'DockerHub'
+  containerRegistryType: 'Container Registry'
 
 
+jobs:
+
+# [Job] Build and push Linux images
+- job: build_and_push_linux_images
+  pool:    
+    vmImage: ubuntu-16.04
+  
+  steps:
+
+  - task: Docker@1
+    displayName: Build arm32v7 image
+    inputs:
+      containerregistrytype: $(containerRegistryType)
+      dockerRegistryEndpoint: $(dockerHubEndpoint)
+      dockerFile: ./dockermanifestci/Dockerfile.arm32v7    
+      imageName: '$(imageName)-arm32v7'
+      addDefaultLabels: false
+  
+  - task: Docker@1
+    displayName: Push arm32v7 image
+    inputs:
+      containerregistrytype: $(containerRegistryType)
+      dockerRegistryEndpoint: $(dockerHubEndpoint)
+      command: 'Push an image'
+      imageName: '$(imageName)-arm32v7'
+  
+  - task: Docker@1
+    displayName: Build AMD64 image
+    inputs:
+      containerregistrytype: $(containerRegistryType)
+      dockerRegistryEndpoint: $(dockerHubEndpoint)
+      dockerFile: ./dockermanifestci/Dockerfile    
+      imageName: '$(imageName)-amd64'
+      addDefaultLabels: false
+  
+  - task: Docker@1
+    displayName: Push amd64 image
+    inputs:
+      containerregistrytype: $(containerRegistryType)
+      dockerRegistryEndpoint: $(dockerHubEndpoint)
+      command: 'Push an image'
+      imageName: '$(imageName)-amd64'
+
+# [Job] Build and push Windows images
+- job: build_and_push_windows_images
+  pool:
+    vmImage: win1803
+  
+  steps:
+  - task: Docker@1
+    displayName: Build windows amd64 image
+    inputs:
+      containerregistrytype: $(containerRegistryType)
+      dockerRegistryEndpoint: $(dockerHubEndpoint)
+      dockerFile: ./dockermanifestci/Dockerfile.windows-amd64    
+      imageName: '$(imageName)-windows-amd64'
+      addDefaultLabels: false
+  
+  - task: Docker@1
+    displayName: Push windows amd64 image
+    inputs:
+      containerregistrytype: $(containerRegistryType)
+      dockerRegistryEndpoint: $(dockerHubEndpoint)
+      command: 'Push an image'
+      imageName: '$(imageName)-windows-amd64'
+
+# [Job] Push multi arch docker manifest
+- job: create_multi_arch_manifest
+  dependsOn:
+  - build_and_push_windows_images
+  - build_and_push_linux_images
+  pool:
+    vmImage: ubuntu-16.04
+  
+  steps:
+  - bash: |
+     mkdir -p ~/.docker
+     echo '{ "experimental": "enabled" }' > ~/.docker/config.json
+    displayName: Enabled docker experimental cli features
+  
+  - bash: |
+     docker --config ~/.docker manifest create $(imageName) '$(imageName)-amd64' '$(imageName)-arm32v7' '$(imageName)-windows-amd64'
+    displayName: Create manifest
+  
+  # docker_user_secret and docker_pwd_secret are variables
+  # defined in the pipeline in Azure DevOps as secrets.
+  # Need to explicitly use them
+  - bash: |
+     docker login -u $docker_user -p $docker_pwd
+     docker --config ~/.docker manifest push $(imageName)
+    env:
+      docker_user: $(docker_user_secret)
+      docker_pwd: $(docker_pwd_secret)
+    displayName: Push manifest
