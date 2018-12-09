@@ -7,14 +7,16 @@ namespace IoTDeviceClientActor
 {
     class IoTDeviceManager
     {
+        private readonly IDeviceCleanupStrategy cleanupStrategy;
         private readonly CancellationToken cts;
         private readonly AsyncManualResetEvent cleanupThreadFinished;
         ConcurrentDictionary<string, IoTDeviceActor> devices = new ConcurrentDictionary<string, IoTDeviceActor>();
         private readonly Thread cleanupThread;
         
 
-        public IoTDeviceManager(CancellationToken cts)
+        public IoTDeviceManager(IDeviceCleanupStrategy cleanupStrategy, CancellationToken cts)
         {
+            this.cleanupStrategy = cleanupStrategy ?? throw new ArgumentNullException(nameof(cleanupStrategy));
             this.cts = cts;
 
             this.cleanupThreadFinished = new AsyncManualResetEvent();
@@ -39,11 +41,21 @@ namespace IoTDeviceClientActor
                     {
                         foreach (var kv in devices)
                         {
-                            if (!kv.Value.HasWork())
+                            lock (kv.Value)
                             {
-                                if (devices.TryRemove(kv.Key, out _))
+                                switch (cleanupStrategy.ShouldCleanup(kv.Value))
                                 {
-                                    Console.WriteLine($"[{kv.Key}] removed");
+                                    case DeviceCleanupDecision.DisconnectClient:
+                                        kv.Value.Disconnect();
+                                        Console.WriteLine($"[{kv.Key}] disconnected");
+                                        break;
+
+                                    case DeviceCleanupDecision.DisconnectAndRemove:
+                                        kv.Value.Dispose();
+                                        devices.TryRemove(kv.Key, out _);
+                                        Console.WriteLine($"[{kv.Key}] removed");
+                                        break;
+
                                 }
                             }
                         }
