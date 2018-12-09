@@ -324,3 +324,4 @@ ASALocalRun/
 /IoTDashboardWithSignalR/docker-compose-local.yml
 /IoTDashboardWithSignalR/running.txt
 /IoTDashboardWithSignalR/src/IoTDashboardWithSignalR.Web/appsettings.Development.json
+/IoTDeviceClientActor/IoTDeviceClientActor/appsettings.local.json
