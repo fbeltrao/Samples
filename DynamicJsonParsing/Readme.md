@@ -76,10 +76,6 @@ hello
 {
   "foo": "bar"
 }
-hello
-{
-  "foo": "bar"
-}
 JObject: {"extraProp":"hello","extraObj":{"foo":"bar"},"rxpk":[{"tmst":44239419,"chan":2,"rfch":1,"freq":868.5,"stat":1,"modu":"LORA","datr":"SF7BW125","codr":"4/5","lsnr":6.8,"rssi":-
 43,"size":15,"data":"gFVVVVUAMwAIMtJdEIT/"}]}
 ```
