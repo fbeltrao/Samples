@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28315.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicJsonParsing", "DynamicJsonParsing.csproj", "{301E9F77-1C77-43CC-AD68-C6014CA1F65B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{301E9F77-1C77-43CC-AD68-C6014CA1F65B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301E9F77-1C77-43CC-AD68-C6014CA1F65B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301E9F77-1C77-43CC-AD68-C6014CA1F65B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301E9F77-1C77-43CC-AD68-C6014CA1F65B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F6740DD-5D24-4723-9E1B-5D7263B0F7BA}
+	EndGlobalSection
+EndGlobal
