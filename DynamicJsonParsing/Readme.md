@@ -31,14 +31,16 @@ Runnining result:
 var typedJson = JsonConvert.DeserializeObject<TypedJson>(json);
 Console.WriteLine(typedJson.ExtraData["extraProp"]);
 Console.WriteLine(typedJson.ExtraData["extraObj"]);
+```
 
-Outputs:
+**Outputs:**
+```text
 hello
 {
   "foo": "bar"
 }
 Typed: {"rxpk":[{"tmst":44239419,"chan":2,"rfch":1,"freq":868.5,"stat":1,"modu":"LORA","datr":"SF7BW125","codr":"4/5","lsnr":6.8,"rssi":-43,"size":15,"data":"gFVVVVUAMwAIMtJdEIT/"}],"e
-xtraProp":"hello","extraObj":{"foo":"bar"}}
+xtraProp":"hello","extraObj":{"foo":"bar"} }
 ```
 
 **Code Generated in benchmark**
@@ -66,8 +68,10 @@ var objJson = (JObject)JsonConvert.DeserializeObject(json);
 Console.WriteLine(objJson["extraProp"]);
 Console.WriteLine(objJson["extraObj"]);
 Console.WriteLine($"JObject: {JsonConvert.SerializeObject(objJson)}");
+```
 
-Outputs:
+**Outputs:**
+```text
 hello
 {
   "foo": "bar"
@@ -105,8 +109,10 @@ dynamic dynamicJson = JsonConvert.DeserializeObject(json);
 Console.WriteLine(dynamicJson["extraProp"]);
 Console.WriteLine(dynamicJson["extraObj"]);
 Console.WriteLine($"Dynamic: {JsonConvert.SerializeObject(typedJson)}");
+```
 
-Outputs:
+**Outputs:**
+```text
 hello
 {
   "foo": "bar"
