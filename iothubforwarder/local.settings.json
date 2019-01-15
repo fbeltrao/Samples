@@ -1,0 +1,8 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "<your-storage-account-connection-string>",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+        "EventHubConnectionString": "<your-iothub-eventhub-compatible-connection-string>"
+    }
+}
